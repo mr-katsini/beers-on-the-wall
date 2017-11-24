@@ -1,13 +1,12 @@
-for quant in range(99, 0, -1):
-    if quant > 1:
-        print quant, "bottles of beer on the weall.", quant, 'bottles of beer.'
-        if quant > 2:
-            suffix = str(quant - 1) + "bottles of beer on the wall"
-        else:
-            suffix = "1 bottle of beer on the wall."
-    elif quant == 1:
-        print "1 bottle of beer on the wall"
-        suffix = 'no more beer on the wall!'
+pluralize = lambda x: x != 1 and 's' or ''
+bottle_beer = lambda x: "{} bottle{} of beer".format(x, pluralize(x))
 
-    print "take one down, pass it around,", suffix
-    print '--'
+def _beer_printer(quant):
+    print("{b} on the wall. {b}.".format(b=bottle_beer(quant)))
+    next_up = "{} on the wall.\n--".format(bottle_beer(quant - 1))
+    if quant - 1 <= 0:
+        next_up = "no more bottles of beer on the wall."
+    print("Take one down, pass it around, {}".format(next_up))
+
+if __name__ == "__main__":
+    list(map(lambda quant: _beer_printer(quant), range(99, 0, -1)))
